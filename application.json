@@ -1,0 +1,12 @@
+{
+  "name": "img-server",
+  "port":9999,
+  "db": {
+    "driver": "mysql",
+    "host": "localhost:3306",
+    "username": "root",
+    "password": "123456",
+    "database": "ims"
+  },
+  "casbin": "./config/rbac_model.conf"
+}

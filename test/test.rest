@@ -1,0 +1,21 @@
+@host = http://172.27.12.180:8080/v1/api
+
+@contentType = application/json
+@token = "Bearer aaa"
+
+
+### login
+GET  {{host}}/login HTTP/1.1
+content-type: application/json
+
+
+### menu 
+GET  {{host}}/menus HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{token}}
+
+
+### token 
+GET  {{host}}/token HTTP/1.1
+content-type: application/json
+Authorization: Bearer {{token}}
