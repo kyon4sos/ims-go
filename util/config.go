@@ -17,7 +17,7 @@ func ReadConfig() core.AppConfig {
 		panic(fmt.Errorf("Fatal error config file: %w \n", err))
 	}
 	var appConfig core.AppConfig
-	fmt.Println(viper.AllSettings())
+	fmt.Println("11")
 	err = mapstructure.Decode(viper.AllSettings(),&appConfig)
 	if err != nil {
 		panic(err.Error())
