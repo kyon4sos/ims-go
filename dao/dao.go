@@ -13,7 +13,6 @@ import (
 var dbInstant *gorm.DB
 
 func init() {
-
 }
 func NewDb(c core.DbConfig) {
 	log.Println("db connecting")
@@ -24,13 +23,13 @@ func NewDb(c core.DbConfig) {
 		log.Fatal("db connecting err:", err.Error())
 		return
 	}
-	err = db.AutoMigrate(model.Menu{})
+	err = db.AutoMigrate(model.Menu{},model.User{})
 	if err != nil {
 		log.Println("db  atuo migrate err", err.Error())
 		return
 	}
 	dbInstant =db
 }
-func Db() *gorm.DB {
+func GetDb() *gorm.DB {
 	return dbInstant
 }

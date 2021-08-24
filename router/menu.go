@@ -7,6 +7,13 @@ import (
 	"img-server/service"
 )
 
+// 菜单 godoc
+// @Summary 菜单
+// @Description 获取菜单
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} core.Resp{data=model.Menu}
+// @Router /menus [get]
 func GetMenus(ctx *gin.Context) *Resp {
 	menus := dao.GetAllMenus()
 	if menus ==nil{
@@ -15,5 +22,5 @@ func GetMenus(ctx *gin.Context) *Resp {
 		menus[i].Icon = service.GenFilePath(m.Icon)
 	}
 	//time.Sleep(time.Millisecond * 3000)
-	return Err(5000,"粗我")
+	return Ok(menus)
 }

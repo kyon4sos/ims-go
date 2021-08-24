@@ -1,6 +1,11 @@
 package core
 
 import (
+	zhcn "github.com/go-playground/locales/zh"
+	ut "github.com/go-playground/universal-translator"
+	"github.com/go-playground/validator/v10"
+	zh_translations "github.com/go-playground/validator/v10/translations/zh"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -94,4 +99,36 @@ func NewRouter(e *gin.RouterGroup) *Router {
 	return &Router{
 		e: e,
 	}
+}
+var trans ut.Translator
+var zhTran= zhcn.New()
+var uni =ut.New(zhTran,zhTran)
+
+var validate *validator.Validate
+
+func UseValidate()  {
+	validate = validator.New()
+	validate.RegisterValidation("tname", customFunc)
+	trans, _ = uni.GetTranslator("zh")
+	err := zh_translations.RegisterDefaultTranslations(validate, trans)
+	if err != nil {
+		return
+	}
+}
+
+func customFunc(fl validator.FieldLevel) bool {
+	return false
+}
+
+func Valid(obj interface{}) string {
+	err := validate.Struct(obj)
+	if err!=nil {
+		errs := err.(validator.ValidationErrors)
+		e := errs.Translate(trans)
+		for k,v:=range e {
+			log.Println(k)
+			return v
+		}
+ 	}
+	return ""
 }

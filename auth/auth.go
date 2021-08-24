@@ -9,6 +9,7 @@ import (
 	"img-server/service"
 	"log"
 	"net/http"
+	"regexp"
 	"strings"
 )
 
@@ -26,8 +27,16 @@ type Config struct {
 
 func (config *Config) IsWhiteUrl(ctx *gin.Context) bool {
 	url := ctx.Request.URL.String()
-	_, ok := config.WhiteUrl[url]
-	return ok
+	for k,_:=range config.WhiteUrl {
+		match, err := regexp.Match(k,[]byte(url))
+		if err != nil {
+			return false
+		}
+		if match {
+			return match
+		}
+	}
+	return false
 }
 
 type Auth struct {
